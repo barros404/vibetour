@@ -7,6 +7,7 @@ This is an academic project developed for IT. The goal of this project is to [br
 Below is a screenshot of the project, showcasing the homepage:
 
 ![Homepage](screenshot/image.png)
+![Search Result](screenshot/search.png)
 
 ## Technologies Used
 
