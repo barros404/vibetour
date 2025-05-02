@@ -6,15 +6,23 @@
             <div class="row no-gutters slider-text js-fullheight align-items-center" data-scrollax-parent="true">
                 <div class="col-md-7 ftco-animate">
                     <span class="subheading">Welcome to Angola</span>
-                    <h1 class="mb-4">Explore the Wonders of Angola with Us</h1>
-                    <p class="caps">Travel through the most beautiful corners of the country with ease</p>
+                    <h1 class="mb-4">Explore the <span class="text-warning">Wonders</span> of Angola</h1>
+                    <p class="caps mb-5">Travel through the most beautiful corners of the country with ease</p>
+
+                    <div class="d-flex align-items-center">
+                        <a href="#destinations" class="btn btn-primary btn-lg px-4 py-3 mr-3">
+                            Explore Now <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="https://www.youtube.com/watch?v=ouTWfsddFa0"
+                            class="icon-video popup-vimeo d-flex align-items-center justify-content-center">
+                            <span class="fa fa-play mr-2"></span> 
+                        </a>
+                    </div>
                 </div>
-                <a href="https://www.youtube.com/watch?v=ouTWfsddFa0"
-                    class="icon-video popup-vimeo d-flex align-items-center justify-content-center mb-4">
-                    <span class="fa fa-play"></span>
-                </a>
             </div>
         </div>
+
+
     </div>
     {{-- Section form form search locatiopn and  Hotel --}}
 
@@ -155,12 +163,12 @@
                                                         <div class="form-field">
                                                             <div class="icon"><span class="fa fa-search"></span>
                                                             </div>
-                                                            <select name="destination" id="destination"
-                                                                class="form-control">
+                                                            <select name="destination" wire:model='destino'
+                                                                id="destination" class="form-control">
                                                                 <option value="" disabled selected>Select
                                                                     destination province</option>
                                                                 @foreach ($provincias as $provincia)
-                                                                    <option value="{{ $provincia->id }}">
+                                                                    <option>
                                                                         {{ $provincia->name }}
                                                                     </option>
                                                                 @endforeach
@@ -175,7 +183,7 @@
                                                             <div class="icon"><span class="fa fa-calendar"></span>
                                                             </div>
                                                             <input type="text" class="form-control checkin_date"
-                                                                placeholder="Check In Date">
+                                                                placeholder="Check In Date" wire:model='data1'>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -186,42 +194,16 @@
                                                             <div class="icon"><span class="fa fa-calendar"></span>
                                                             </div>
                                                             <input type="text" class="form-control checkout_date"
-                                                                placeholder="Check Out Date">
+                                                                placeholder="Check Out Date" wire:model='data2'>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg d-flex">
-                                                    <div class="form-group p-4">
-                                                        <label for="#">Price Limit</label>
-                                                        <div class="form-field">
-                                                            <div class="select-wrap">
-                                                                <div class="icon"><span
-                                                                        class="fa fa-chevron-down"></span></div>
-                                                                <select name="" id=""
-                                                                    class="form-control">
-                                                                    <option value="">$100</option>
-                                                                    <option value="">$10,000</option>
-                                                                    <option value="">$50,000</option>
-                                                                    <option value="">$100,000</option>
-                                                                    <option value="">$200,000</option>
-                                                                    <option value="">$300,000</option>
-                                                                    <option value="">$400,000</option>
-                                                                    <option value="">$500,000</option>
-                                                                    <option value="">$600,000</option>
-                                                                    <option value="">$700,000</option>
-                                                                    <option value="">$800,000</option>
-                                                                    <option value="">$900,000</option>
-                                                                    <option value="">$1,000,000</option>
-                                                                    <option value="">$2,000,000</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+
                                                 <div class="col-lg d-flex">
                                                     <div class="form-group d-flex w-100 border-0">
                                                         <div class="form-field w-100 align-items-center d-flex">
-                                                            <input type="submit" value="Search"
+                                                            <input type="button" value="Search"
+                                                                wire:click='search_hotel'
                                                                 class="align-self-stretch form-control btn btn-primary p-0">
                                                         </div>
                                                     </div>
@@ -249,83 +231,151 @@
                                 <p class="text-muted">Try adjusting your search criteria</p>
                             </div>
                         @else
-                            @php
-                                $lowestPrice = $results->min('preco');
-                            @endphp
+                            @if ($hotel == false)
+                                @php
+                                    $lowestPrice = $results->min('preco');
+                                @endphp
 
-                            <div class="row g-4"> {{-- Grid gap adicionado --}}
-                                @foreach ($results as $result)
-                                    <div class="col-xl-3 col-lg-4 col-md-6"> {{-- Colunas mais detalhadas --}}
-                                        <div
-                                            class="card h-100 shadow-sm position-relative
-                                            border-hover-primary @if ($result->preco == $lowestPrice) border-success border-2 @else border @endif">
+                                <div class="row g-4"> {{-- Grid gap adicionado --}}
+                                    @foreach ($results as $result)
+                                        <div class="col-xl-3 col-lg-4 col-md-6"> {{-- Colunas mais detalhadas --}}
+                                            <div
+                                                class="card h-100 shadow-sm position-relative
+                                        border-hover-primary @if ($result->preco == $lowestPrice) border-success border-2 @else border @endif">
 
-                                            {{-- Badge de menor preço --}}
-                                            @if ($result->preco == $lowestPrice)
-                                                <div class="position-absolute top-0 start-0 m-2">
-                                                    <span class="badge bg-success bg-opacity-90 text-white">
-                                                        <i class="bi bi-tag-fill me-1"></i>Cheapest
-                                                    </span>
-                                                </div>
-                                            @endif
+                                                {{-- Badge de menor preço --}}
+                                                @if ($result->preco == $lowestPrice)
+                                                    <div class="position-absolute top-0 start-0 m-2">
+                                                        <span class="badge bg-success bg-opacity-90 text-white">
+                                                            <i class="bi bi-tag-fill me-1"></i>Cheapest
+                                                        </span>
+                                                    </div>
+                                                @endif
 
-                                            <div class="card-body d-flex flex-column">
-                                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                                    <h5 class="card-title mb-0 text-truncate pe-2">
-                                                        {{ $this->getProvianciaName($result->origem_id) }} →
-                                                        {{ $this->getProvianciaName($result->destino_id) }}
-                                                    </h5>
-                                                    <i class="bi bi-bus-front fs-5 text-primary"></i>
-                                                </div>
+                                                <div class="card-body d-flex flex-column">
+                                                    <div
+                                                        class="d-flex justify-content-between align-items-center mb-3">
+                                                        <h5 class="card-title mb-0 text-truncate pe-2">
+                                                            {{ $this->getProvianciaName($result->origem_id) }} →
+                                                            {{ $this->getProvianciaName($result->destino_id) }}
+                                                        </h5>
+                                                        <i class="bi bi-bus-front fs-5 text-primary"></i>
+                                                    </div>
 
-                                                <div class="row g-2 mt-auto">
-                                                    <div class="col-md-6">
-                                                        <div class="d-flex align-items-center">
-                                                            <i class="bi bi-building me-2 text-muted"></i>
-                                                            <div>
-                                                                <div class="text-muted small">Transport Company</div>
-                                                                <div class="h6 text-primary mb-0">
-                                                                    {{ $result->transportadora_nome }}</div>
+                                                    <div class="row g-2 mt-auto">
+                                                        <div class="col-md-6">
+                                                            <div class="d-flex align-items-center">
+                                                                <i class="bi bi-building me-2 text-muted"></i>
+                                                                <div>
+                                                                    <div class="text-muted small">Transport Company
+                                                                    </div>
+                                                                    <div class="h6 text-primary mb-0">
+                                                                        {{ $result->transportadora_nome }}</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="text-end">
+                                                                <div class="text-muted small">Total Price</div>
+                                                                <div class="h3 text-success fw-bolder mb-0">
+                                                                    @if (is_numeric($result->preco))
+                                                                        {{ number_format($result->preco, 2, ',', ' ') }}
+                                                                        <small class="fs-6">Kz</small>
+                                                                    @else
+                                                                        <span class="text-danger fs-6">N/A</span>
+                                                                    @endif
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                    <div class="col-md-6">
-                                                        <div class="text-end">
-                                                            <div class="text-muted small">Total Price</div>
-                                                            <div class="h3 text-success fw-bolder mb-0">
-                                                                @if (is_numeric($result->preco))
-                                                                    {{ number_format($result->preco, 2, ',', ' ') }}
-                                                                    <small class="fs-6">Kz</small>
-                                                                @else
-                                                                    <span class="text-danger fs-6">N/A</span>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="card-footer bg-transparent py-2">
-                                                <div class="d-flex justify-content-between small text-muted">
-                                                    <span>
-                                                        <i class="bi bi-calendar3 me-1"></i>
-                                                        @if ($result->departure_date)
-                                                            {{ \Carbon\Carbon::parse($result->departure_date)->format('d M Y') }}
-                                                        @else
-                                                            Flexible
-                                                        @endif
-                                                    </span>
-                                                    <span>
-                                                        <i class="bi bi-clock me-1"></i>
-                                                        {{ $result->duration ?? '--:--' }}
-                                                    </span>
+                                                <div class="card-footer bg-transparent py-2">
+                                                    <div class="d-flex justify-content-between small text-muted">
+                                                        <span>
+                                                            <i class="bi bi-calendar3 me-1"></i>
+                                                            @if ($result->departure_date)
+                                                                {{ \Carbon\Carbon::parse($result->departure_date)->format('d M Y') }}
+                                                            @else
+                                                                Flexible
+                                                            @endif
+                                                        </span>
+                                                        <span>
+                                                            <i class="bi bi-clock me-1"></i>
+                                                            {{ $result->duration ?? '--:--' }}
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endforeach
-                            </div>
+                                    @endforeach
+                                </div>
+                            @else
+                                @php
+                                    $lowestPrice = $results->min('preco');
+                                @endphp
+
+                                <div class="row g-4"> {{-- Grid gap adicionado --}}
+                                    @foreach ($results as $result)
+                                        <div class="col-xl-3 col-lg-4 col-md-6"> {{-- Colunas mais detalhadas --}}
+                                            <div
+                                                class="card h-100 shadow-sm position-relative
+                                        border-hover-primary @if ($result->preco == $lowestPrice) border-success border-2 @else border @endif">
+
+                                                {{-- Badge de menor preço --}}
+                                                @if ($result->preco == $lowestPrice)
+                                                    <div class="position-absolute top-0 start-0 m-2">
+                                                        <span class="badge bg-success bg-opacity-90 text-white">
+                                                            <i class="bi bi-tag-fill me-1"></i>Cheapest
+                                                        </span>
+                                                    </div>
+                                                @endif
+
+                                                <div class="card-body d-flex flex-column">
+                                                    <div
+                                                        class="d-flex justify-content-between align-items-center mb-3">
+                                                        <h5 class="card-title mb-0 text-truncate pe-2">
+                                                            {{ $result->location }}
+                                                        </h5>
+                                                        <i class="bi bi-bus-front fs-5 text-primary"></i>
+                                                    </div>
+
+                                                    <div class="row g-2 mt-auto">
+                                                        <div class="col-md-6">
+                                                            <div class="d-flex align-items-center">
+                                                                <i class="bi bi-building me-2 text-muted"></i>
+                                                                <div>
+                                                                    <div class="text-muted small">
+                                                                    </div>
+                                                                    <div class="h6 text-primary mb-0">
+                                                                        {{ $result->name }}</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="text-end">
+                                                                <div class="text-muted small">Total Price</div>
+                                                                <div class="h3 text-success fw-bolder mb-0">
+                                                                    @if (is_numeric($result->preco_total))
+                                                                        {{ number_format($result->preco_total, 2, ',', ' ') }}
+                                                                        <small class="fs-6">Kz</small>
+                                                                    @else
+                                                                        <span class="text-danger fs-6">N/A</span>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+
                         @endif
                     </div>
                 </div>
@@ -334,7 +384,7 @@
     @endif
 
     {{-- Section  for Abou My Angola --}}
-    <section class="ftco-section services-section">
+    <section id="destinations" class="ftco-section services-section">
         <div class="container">
             <div class="row d-flex">
                 <div class="col-md-6 order-md-last heading-section pl-md-5 ftco-animate d-flex align-items-center">
@@ -411,68 +461,108 @@
             </div>
         </div>
     </section>
-    {{-- List main --}}
-    <section class="ftco-section img ftco-select-destination" style="background-image: url(images/bg_3.jpg);">
+    <section id="accommodation" class="ftco-section bg-light">
         <div class="container">
-            <div class="row justify-content-center pb-4">
-                <div class="col-md-12 heading-section text-center ftco-animate">
-                    <span class="subheading">Pacific Provide Places</span>
-                    <h2 class="mb-4">Select Your Destination</h2>
+            <div class="row mb-5">
+                <div class="col-md-12 text-center">
+                    <h2 class="section-title mb-4">Available Accommodations</h2>
+                    <p>Explore our accommodations and find the perfect place for your stay.</p>
                 </div>
             </div>
-        </div>
-        <div class="container container-2">
             <div class="row">
-                <div class="col-md-12">
-                    <div class="carousel-destination owl-carousel ftco-animate">
-                        <div class="item">
-                            <div class="project-destination">
-                                <a href="#" class="img" style="background-image: url(images/place-1.jpg);">
-                                    <div class="text">
-                                        <h3>Philippines</h3>
-                                        <span>8 Tours</span>
-                                    </div>
-                                </a>
+                @foreach ($featuredAccommodations as $item)
+                    <div class="col-md-4 mb-4">
+                        <div class="accommodation-card">
+                            <!-- Main Image -->
+                            <img src="{{ asset('' . $item->main_image) }}" alt="{{ $item->name }}"
+                                class="img-fluid card-img-top">
+
+                            <!-- Accommodation Information -->
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $item->name }}</h5>
+                                <p class="card-location text-muted"><i class="fas fa-map-marker-alt"></i>
+                                    {{ $item->location }}</p>
+                                <p class="card-price"> {{ number_format($item->price_per_night, 2, ',', '.') }} Kz/
+                                    night</p>
+
+                                <div class="stars">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <i
+                                            class="fas fa-star {{ $i <= $item->stars ? 'text-warning' : 'text-muted' }}"></i>
+                                    @endfor
+                                </div>
+
+                                <p class="card-amenities text-muted mt-2">
+                                    <strong>Amenities:</strong> {{ $item->amenities }}
+                                </p>
+
+                                <a href="#" class="btn btn-primary btn-block mt-3">View Details</a>
                             </div>
                         </div>
-                        <div class="item">
-                            <div class="project-destination">
-                                <a href="#" class="img" style="background-image: url(images/place-2.jpg);">
-                                    <div class="text">
-                                        <h3>Canada</h3>
-                                        <span>2 Tours</span>
-                                    </div>
-                                </a>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    {{-- List main --}}
+    <!-- Seção About Us -->
+    <section id="about" class="ftco-section services-section bg-light">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-md-8 text-center">
+                    <h2 class="heading-section">Why Visit <span class="text-primary">Angola</span>?</h2>
+                    <p class="subheading">A land of contrasts and natural beauty</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="about-image">
+                        <div class="img-container">
+                            <img src="{{ asset('angola.png') }}" alt="Angola Map" class="img-fluid">
+                        </div>
+                        <div class="stats-box">
+                            <div class="stat-item">
+                                <h3>18</h3>
+                                <p>Provinces</p>
+                            </div>
+                            <div class="stat-item">
+                                <h3>1,600+ km</h3>
+                                <p>Coastline</p>
+                            </div>
+                            <div class="stat-item">
+                                <h3>25M+</h3>
+                                <p>Population</p>
                             </div>
                         </div>
-                        <div class="item">
-                            <div class="project-destination">
-                                <a href="#" class="img" style="background-image: url(images/place-3.jpg);">
-                                    <div class="text">
-                                        <h3>Thailand</h3>
-                                        <span>5 Tours</span>
-                                    </div>
-                                </a>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="about-content pl-md-5">
+                        <h3 class="mb-4">Discover Angola's Hidden Gems</h3>
+                        <p>Angola is a country of remarkable diversity, from the tropical Atlantic coast to the arid
+                            south and lush northern rainforests.</p>
+
+                        <div class="features-list mt-5">
+                            <div class="feature-item">
+                                <div class="icon">
+                                    <span class="flaticon-beach"></span>
+                                </div>
+                                <div class="text">
+                                    <h4>Stunning Beaches</h4>
+                                    <p>Over 1,600 km of pristine coastline with world-class beaches.</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="item">
-                            <div class="project-destination">
-                                <a href="#" class="img" style="background-image: url(images/place-4.jpg);">
-                                    <div class="text">
-                                        <h3>Autralia</h3>
-                                        <span>5 Tours</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="project-destination">
-                                <a href="#" class="img" style="background-image: url(images/place-5.jpg);">
-                                    <div class="text">
-                                        <h3>Greece</h3>
-                                        <span>7 Tours</span>
-                                    </div>
-                                </a>
+
+                            <div class="feature-item">
+                                <div class="icon">
+                                    <span class="flaticon-wildlife"></span>
+                                </div>
+                                <div class="text">
+                                    <h4>Rich Wildlife</h4>
+                                    <p>Home to diverse ecosystems and national parks.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -480,5 +570,82 @@
             </div>
         </div>
     </section>
+
+    <!-- Accommodation Section -->
+
+
+
+    <!-- Seção Contact -->
+    <section id="contact" class="ftco-section contact-section">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-md-8 text-center">
+                    <h2 class="heading-section">Contact Us</h2>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card shadow-lg border-0">
+                        <div class="card-body p-5">
+                            @if (session('success'))
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul class="mb-0">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            <form action="#" method="POST" class="contact-form">
+                                @csrf
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" name="name"
+                                        placeholder="Your Name" value="{{ old('name') }}" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="email" class="form-control" name="email"
+                                        placeholder="Your Email" value="{{ old('email') }}" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" name="subject" placeholder="Subject"
+                                        value="{{ old('subject') }}" required>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <textarea name="message" cols="30" rows="6" class="form-control" placeholder="Your Message" required>{{ old('message') }}</textarea>
+                                </div>
+                                <div class="form-group text-center">
+                                    <button type="submit" class="btn btn-primary px-5 py-2">Send Message</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @php $contact = App\Models\ContactInformation::first(); @endphp
+            @if ($contact)
+                <div class="row justify-content-center mt-5">
+                    <div class="col-md-8 text-center">
+                        <div class="contact-info">
+                            <p><strong>Address:</strong> {{ $contact->address }}</p>
+                            <p><strong>Email:</strong> {{ $contact->email }}</p>
+                            <p><strong>Phone:</strong> {{ $contact->phone }}</p>
+                            <!-- Add more fields as needed -->
+                        </div>
+                    </div>
+                </div>
+            @endif
+        </div>
+    </section>
+
+
 
 </div>
