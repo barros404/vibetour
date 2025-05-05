@@ -36,7 +36,7 @@ class Welcome extends Component
                 ->limit(3)
                 ->get(),
             'contactInfo' => ContactInformation::first()
-        ]);
+        ])->title('Descover Angola');
     }
     function search_viajem(){
         $this->search=true;

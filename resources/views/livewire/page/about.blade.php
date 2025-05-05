@@ -1,225 +1,18 @@
 <div>
-    {{-- Image Main --}}
-    <div class="hero-wrap js-fullheight" style="background-image: url('{{ asset('images/IMG_5472.webp') }}');">
+    <section class="hero-wrap hero-wrap-2 js-fullheight"
+        style="background-image: url('Rio-Cubango-Cuando-Cubango-min-1024x683.jpg');">
         <div class="overlay"></div>
         <div class="container">
-            <div class="row no-gutters slider-text js-fullheight align-items-center" data-scrollax-parent="true">
-                <div class="col-md-7 ftco-animate">
-                    <span class="subheading">Welcome to Angola</span>
-                    <h1 class="mb-4">Explore the <span class="text-warning">Wonders</span> of Angola</h1>
-                    <p class="caps mb-5">Travel through the most beautiful corners of the country with ease</p>
-
-                    <div class="d-flex align-items-center">
-                        <a href="#destinations" class="btn btn-primary btn-lg px-4 py-3 mr-3">
-                            Explore Now <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
-                        <a href="https://www.youtube.com/watch?v=ouTWfsddFa0"
-                            class="icon-video popup-vimeo d-flex align-items-center justify-content-center">
-                            <span class="fa fa-play mr-2"></span>
-                        </a>
-                    </div>
+            <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+                <div class="col-md-9 ftco-animate pb-5 text-center">
+                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i
+                                    class="fa fa-chevron-right"></i></a></span> <span>About us <i
+                                class="fa fa-chevron-right"></i></span></p>
+                    <h1 class="mb-0 bread">About Us</h1>
                 </div>
             </div>
         </div>
-
-
-    </div>
-    {{-- Section form form search locatiopn and  Hotel --}}
-
-    <section class="ftco-section ftco-no-pb ftco-no-pt">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="ftco-search d-flex justify-content-center">
-                        <div class="row">
-                            <div class="col-md-12 nav-link-wrap">
-                                <div class="nav nav-pills text-center" id="v-pills-tab" role="tablist"
-                                    aria-orientation="vertical">
-                                    <a class="nav-link active mr-md-1" id="v-pills-1-tab" data-toggle="pill"
-                                        href="#v-pills-1" role="tab" aria-controls="v-pills-1"
-                                        aria-selected="true">Search Tour</a>
-
-                                    <a class="nav-link" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2"
-                                        role="tab" aria-controls="v-pills-2" aria-selected="false">Hotel</a>
-
-                                </div>
-                            </div>
-                            <div class="col-md-12 tab-wrap">
-
-                                <div class="tab-content" id="v-pills-tabContent">
-                                    {{-- Viajem com a gente --}}
-                                    <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel"
-                                        aria-labelledby="v-pills-nextgen-tab">
-                                        <form action="{{ route('search') }}" class="search-property-1">
-
-                                            <input type="hidden" name="type" value="tour">
-                                            <div class="row no-gutters">
-                                                <!-- Origin -->
-                                                <div class="col-md d-flex">
-                                                    <div class="form-group p-4 border-0">
-                                                        <label for="origin">Origin</label>
-                                                        <div class="form-field">
-                                                            <div class="icon"><span class="fa fa-map-marker"></span>
-                                                            </div>
-                                                            <select name="origin" id="origin" class="form-control"
-                                                                name='origin'>
-                                                                <option value="" disabled selected>Select origin
-                                                                    province</option>
-                                                                @foreach ($provincias as $provincia)
-                                                                    <option value="{{ $provincia->id }}">
-                                                                        {{ $provincia->name }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Destination -->
-                                                <div class="col-md d-flex">
-                                                    <div class="form-group p-4 border-0">
-                                                        <label for="destination">Destination</label>
-                                                        <div class="form-field">
-                                                            <div class="icon"><span class="fa fa-search"></span></div>
-                                                            <select name="destination" id="destination"
-                                                                class="form-control" name='destination'>
-                                                                <option value="" disabled selected>Select
-                                                                    destination province</option>
-                                                                @foreach ($provincias as $provincia)
-                                                                    <option value="{{ $provincia->id }}">
-                                                                        {{ $provincia->name }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Check-in -->
-                                                <div class="col-md d-flex">
-                                                    <div class="form-group p-4">
-                                                        <label for="checkin_date">Check-in Date</label>
-                                                        <div class="form-field">
-                                                            <div class="icon"><span class="fa fa-calendar"></span>
-                                                            </div>
-                                                            <input type="text" class="form-control checkin_date"
-                                                                name='checkin_date'>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <!-- Price Limit -->
-                                                <div class="col-md d-flex">
-                                                    <div class="form-group p-4">
-                                                        <label for="price_limit">Price Limit</label>
-                                                        <div class="form-field">
-                                                            <div class="select-wrap">
-                                                                <div class="icon"><span
-                                                                        class="fa fa-chevron-down"></span></div>
-                                                                <select name="price_limit" id="price_limit"
-                                                                    class="form-control">
-                                                                    <option value="">10,000</option>
-                                                                    <option value="">50,000</option>
-                                                                    <option value="">100,000</option>
-                                                                    <option value="">200,000</option>
-                                                                    <option value="">300,000</option>
-                                                                    <option value="">400,000</option>
-                                                                    <option value="">500,000</option>
-                                                                    <option value="">600,000</option>
-                                                                    <option value="">700,000</option>
-                                                                    <option value="">800,000</option>
-                                                                    <option value="">900,000</option>
-                                                                    <option value="">1,000,000</option>
-                                                                    <option value="">2,000,000</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Submit Button -->
-                                                <div class="col-md d-flex">
-                                                    <div class="form-group d-flex w-100 border-0">
-                                                        <div class="form-field w-100 align-items-center d-flex">
-                                                            <input type="submit" name="formtour" value="SearchTour"
-                                                                class="align-self-stretch form-control btn btn-primary">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-
-
-                                    <div class="tab-pane fade" id="v-pills-2" role="tabpanel"
-                                        aria-labelledby="v-pills-performance-tab">
-                                        <form action="{{ route('search') }}" class="search-property-1">
-                                            @csrf
-                                            <input type="hidden" name="type" value="hotel">
-                                            <div class="row no-gutters">
-                                                <div class="col-lg d-flex">
-                                                    <div class="form-group p-4 border-0">
-                                                        <label for="destination">Destination</label>
-                                                        <div class="form-field">
-                                                            <div class="icon"><span class="fa fa-search"></span>
-                                                            </div>
-                                                            <select name='destino'
-                                                                id="destino" class="form-control">
-                                                                <option value="" disabled selected>Select
-                                                                    destination province</option>
-                                                                @foreach ($provincias as $provincia)
-                                                                    <option value="{{ $provincia->name }}">
-                                                                        {{ $provincia->name }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg d-flex">
-                                                    <div class="form-group p-4">
-                                                        <label for="#">Check-in date</label>
-                                                        <div class="form-field">
-                                                            <div class="icon"><span class="fa fa-calendar"></span>
-                                                            </div>
-                                                            <input type="date" class="form-control "
-                                                                placeholder="Check In Date" name='data1'>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg d-flex">
-                                                    <div class="form-group p-4">
-                                                        <label for="#">Check-out date</label>
-                                                        <div class="form-field">
-                                                            <div class="icon"><span class="fa fa-calendar"></span>
-                                                            </div>
-                                                            <input type="date" class="form-control "
-                                                                placeholder="Check Out Date" name='data2'>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg d-flex">
-                                                    <div class="form-group d-flex w-100 border-0">
-                                                        <div class="form-field w-100 align-items-center d-flex">
-                                                            <input type="submit" value="Search"
-
-                                                                class="align-self-stretch form-control btn btn-primary p-0">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
     </section>
-    {{-- Section  for Abou My Angola --}}
     <section id="destinations" class="ftco-section services-section">
         <div class="container">
             <div class="row d-flex">
@@ -475,6 +268,18 @@
         </div>
     </section>
 
-
-
+    <section class="ftco-intro ftco-section ftco-no-pt">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12 text-center">
+                    <div class="img" style="background-image: url(images/bg_2.jpg);">
+                        <div class="overlay"></div>
+                        <h2>We Are Pacific A Travel Agency</h2>
+                        <p>We can manage your dream building A small river named Duden flows by their place</p>
+                        <p class="mb-0"><a href="#" class="btn btn-primary px-4 py-3">Ask For A Quote</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>

@@ -23,13 +23,21 @@
 
     <link rel="stylesheet" href="{{ asset('css/flaticon.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <style>
+        .navbar-pesquisa {
+            background-color: #004080 !important;
+            /* Exemplo: azul escuro personalizado */
+        }
+    </style>
 
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar {{ isset($title) && $title == 'Resultados da Pesquisa' ? 'bg-primary' : 'bg-dark' }} ftco-navbar-light"
+        id="ftco-navbar">
+
         <div class="container">
-            <a class="navbar-brand" href="index.html">Discover<span>Angola</span></a>
+            <a class="navbar-brand" href="{{ route('welcome') }}">Discover<span>Angola</span></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
                 aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="oi oi-menu"></span> Menu
@@ -37,11 +45,11 @@
 
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a href="#home" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="#destinations" class="nav-link">Destinations</a></li>
-                    <li class="nav-item"><a href="#accommodation" class="nav-link">Accommodation</a></li>
-                    <li class="nav-item"><a href="#about" class="nav-link">About Us</a></li>
-                    <li class="nav-item"><a href="#contact" class="nav-link">Contact Us</a></li>
+                    <li class="nav-item active"><a href="{{ route('welcome') }}" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="{{ route('destination') }}" class="nav-link">Destinations</a></li>
+                    <li class="nav-item"><a href="{{ route('hotel') }}" class="nav-link">Hotel</a></li>
+                    <li class="nav-item"><a href="{{ route('about') }}" class="nav-link">About Us</a></li>
+                    <li class="nav-item"><a href="{{ route('contact') }}" class="nav-link">Contact Us</a></li>
 
 
                 </ul>
@@ -57,58 +65,70 @@
             <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4"
                 stroke-miterlimit="10" stroke="#F96D00" />
         </svg></div>
-    <footer class="ftco-footer ftco-bg-dark ftco-section text-white">
+    <footer class="ftco-footer bg-bottom ftco-no-pt" style="background-image: url(images/bg_3.jpg);">
         <div class="container">
             <div class="row mb-5">
-                <div class="col-md-4">
-                    <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2">Discover Angola</h2>
-                        <p>Your gateway to the most authentic Angolan travel experiences.</p>
-                        <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-                            <li><a href="#"><span class="icon-twitter"></span></a></li>
-                            <li><a href="#"><span class="icon-facebook"></span></a></li>
-                            <li><a href="#"><span class="icon-instagram"></span></a></li>
+                <div class="col-md pt-5">
+                    <div class="ftco-footer-widget pt-md-5 mb-4">
+                        <h2 class="ftco-heading-2">About</h2>
+                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                            there live the blind texts.</p>
+                        <ul class="ftco-footer-social list-unstyled float-md-left float-lft">
+                            <li class="ftco-animate"><a href="#"><span class="fa fa-twitter"></span></a></li>
+                            <li class="ftco-animate"><a href="#"><span class="fa fa-facebook"></span></a></li>
+                            <li class="ftco-animate"><a href="#"><span class="fa fa-instagram"></span></a></li>
                         </ul>
                     </div>
                 </div>
-
-                <div class="col-md-4">
-                    <div class="ftco-footer-widget mb-4 ml-md-5">
-                        <h2 class="ftco-heading-2">Quick Links</h2>
+                <div class="col-md pt-5 border-left">
+                    <div class="ftco-footer-widget pt-md-5 mb-4 ml-md-5">
+                        <h2 class="ftco-heading-2">Infromation</h2>
                         <ul class="list-unstyled">
-                            <li><a href="#home" class="py-2 d-block">Home</a></li>
-                            <li><a href="#about" class="py-2 d-block">About</a></li>
-                            <li><a href="#destinations" class="py-2 d-block">Destinations</a></li>
-                            <li><a href="#blog" class="py-2 d-block">Blog</a></li>
-                            <li><a href="#contact" class="py-2 d-block">Contact</a></li>
+                            <li><a href="#" class="py-2 d-block">Online Enquiry</a></li>
+                            <li><a href="#" class="py-2 d-block">General Enquiries</a></li>
+                            <li><a href="#" class="py-2 d-block">Booking Conditions</a></li>
+                            <li><a href="#" class="py-2 d-block">Privacy and Policy</a></li>
+                            <li><a href="#" class="py-2 d-block">Refund Policy</a></li>
                         </ul>
                     </div>
                 </div>
-
-                <div class="col-md-4">
-                    <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2">Contact Info</h2>
+                <div class="col-md pt-5 border-left">
+                    <div class="ftco-footer-widget pt-md-5 mb-4">
+                        <h2 class="ftco-heading-2">Experience</h2>
+                        <ul class="list-unstyled">
+                            <li class="nav-item active"><a href="{{ route('welcome') }}" class="nav-link">Home</a></li>
+                            <li class="nav-item"><a href="{{ route('destination') }}" class="nav-link">Destinations</a></li>
+                            <li class="nav-item"><a href="{{ route('hotel') }}" class="nav-link">Hotel</a></li>
+                            <li class="nav-item"><a href="{{ route('about') }}" class="nav-link">About Us</a></li>
+                            <li class="nav-item"><a href="{{ route('contact') }}" class="nav-link">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md pt-5 border-left">
+                    <div class="ftco-footer-widget pt-md-5 mb-4">
+                        <h2 class="ftco-heading-2">Have a Questions?</h2>
                         <div class="block-23 mb-3">
                             <ul>
-                                <li><span class="icon icon-map-marker"></span><span class="text">123 Avenida 4 de
-                                        Fevereiro, Luanda, Angola</span></li>
-                                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+244
-                                            923 456 789</span></a></li>
-                                <li><a href="#"><span class="icon icon-envelope"></span><span
-                                            class="text">info@discoverangola.com</span></a></li>
+                                <li><span class="icon fa fa-map-marker"></span><span class="text">203 Fake St.
+                                        Mountain View, San Francisco, California, USA</span></li>
+                                <li><a href="#"><span class="icon fa fa-phone"></span><span class="text">+2
+                                            392 3929 210</span></a></li>
+                                <li><a href="#"><span class="icon fa fa-paper-plane"></span><span
+                                            class="text">info@yourdomain.com</span></a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <p class="copyright">
-                        &copy;
+
+                    <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;
                         <script>
                             document.write(new Date().getFullYear());
-                        </script> Discover Angola. All Rights Reserved
+                        </script> All rights reserved
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     </p>
                 </div>
             </div>
